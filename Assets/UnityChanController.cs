@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnityChanController : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class UnityChanController : MonoBehaviour
 
 	private bool isEnd = false;
 
+	private GameObject stateText;
+
     // Use this for initialization
     void Start()
     {
@@ -28,6 +31,8 @@ public class UnityChanController : MonoBehaviour
         this.myAnimator.SetFloat("Speed", 1);
 
         this.myRigidbody = GetComponent<Rigidbody>();
+
+		this.stateText = GameObject.Find("GameResultText");
     }
 
     // Update is called once per frame
@@ -72,11 +77,13 @@ public class UnityChanController : MonoBehaviour
 		if (other.gameObject.tag == "CarTag" || other.gameObject.tag == "TrafficConeTag")
 		{
 			this.isEnd = true;
+			this.stateText.GetComponent<Text>().text = "GAME OVER";
 		}
 
 		if (other.gameObject.tag == "GoalTag")
 		{
 			this.isEnd = true;
+			this.stateText.GetComponent<Text>().text = "CLEAR!!";
 		}
 
 		if (other.gameObject.tag == "CoinTag")
