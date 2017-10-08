@@ -8,13 +8,17 @@ public class UnityChanController : MonoBehaviour
 
     private Rigidbody myRigidbody;
 
-    private float forwordForce = 800.0f;
+    private float forwardForce = 800.0f;
 
     private float turnForce = 500.0f;
 
     private float upForce = 500.0f;
 
     private float movableRange = 3.4f;
+
+	private float coefficient = 0.95f;
+
+	private bool isEnd = false;
 
     // Use this for initialization
     void Start()
@@ -29,8 +33,15 @@ public class UnityChanController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (this.isEnd) {
+			this.forwardForce *= this.coefficient;
+			this.turnForce *= this.coefficient;
+			this.upForce *= this.coefficient;
+			this.myAnimator.speed *= this.coefficient;
+		}
+
         // 前進
-        this.myRigidbody.AddForce(this.transform.forward * this.forwordForce);
+        this.myRigidbody.AddForce(this.transform.forward * this.forwardForce);
 
         // 左右移動
         if (Input.GetKey(KeyCode.LeftArrow) && -this.movableRange < this.transform.position.x)
@@ -55,4 +66,22 @@ public class UnityChanController : MonoBehaviour
             this.myRigidbody.AddForce(this.transform.up * this.upForce);
         }
     }
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.tag == "CarTag" || other.gameObject.tag == "TrafficConeTag")
+		{
+			this.isEnd = true;
+		}
+
+		if (other.gameObject.tag == "GoalTag")
+		{
+			this.isEnd = true;
+		}
+
+		if (other.gameObject.tag == "CoinTag")
+		{
+			Destroy(other.gameObject);
+		}
+	}
 }
