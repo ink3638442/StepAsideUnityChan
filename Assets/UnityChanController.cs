@@ -29,7 +29,6 @@ public class UnityChanController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(this.transform.forward);
         // 前進
         this.myRigidbody.AddForce(this.transform.forward * this.forwordForce);
 
