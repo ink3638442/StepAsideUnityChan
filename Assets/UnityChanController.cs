@@ -81,6 +81,8 @@ public class UnityChanController : MonoBehaviour
 
 		if (other.gameObject.tag == "CoinTag")
 		{
+			GetComponent<ParticleSystem>().Play();
+
 			Destroy(other.gameObject);
 		}
 	}
