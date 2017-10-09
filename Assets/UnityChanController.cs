@@ -27,6 +27,10 @@ public class UnityChanController : MonoBehaviour
 
 	private int score = 0;
 
+	private bool isLButtonDown = false;
+
+	private bool isRButtonDown = false;
+
     // Use this for initialization
     void Start()
     {
@@ -55,11 +59,11 @@ public class UnityChanController : MonoBehaviour
         this.myRigidbody.AddForce(this.transform.forward * this.forwardForce);
 
         // 左右移動
-        if (Input.GetKey(KeyCode.LeftArrow) && -this.movableRange < this.transform.position.x)
+        if ((Input.GetKey(KeyCode.LeftArrow) || isLButtonDown) && -this.movableRange < this.transform.position.x)
         {
             this.myRigidbody.AddForce(-this.turnForce, 0, 0);
         }
-        else if (Input.GetKey(KeyCode.RightArrow) && this.transform.position.x < this.movableRange)
+        else if ((Input.GetKey(KeyCode.RightArrow) || isRButtonDown) && this.transform.position.x < this.movableRange)
         {
             this.myRigidbody.AddForce(this.turnForce, 0, 0);
         }
@@ -102,5 +106,33 @@ public class UnityChanController : MonoBehaviour
 
 			Destroy(other.gameObject);
 		}
+	}
+
+	public void GetMyJumpButtonDown() {
+		if (this.transform.position.y < 0.5f)
+		{
+			this.myAnimator.SetBool("Jump", true);
+			this.myRigidbody.AddForce(this.transform.up * this.upForce);
+		}
+	}
+	
+	public void GetMyLeftButtonDown()
+	{
+		this.isLButtonDown = true;
+	}
+
+	public void GetMyLeftButtonUp()
+	{
+		this.isLButtonDown = false;
+	}
+
+	public void GetMyRightButtonDown()
+	{
+		this.isRButtonDown = true;
+	}
+
+	public void GetMyRightButtonUp()
+	{
+		this.isRButtonDown = false;
 	}
 }
