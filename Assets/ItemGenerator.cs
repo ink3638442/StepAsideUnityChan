@@ -51,7 +51,11 @@ public class ItemGenerator : MonoBehaviour
             {
                 for (float j = -1; j <= 1; j += 0.4f)
                 {
+					// コーンを作成
                     GameObject cone = Instantiate(conePrefab) as GameObject;
+					// Destroy機能をオブジェクトに持たせる
+					cone.AddComponent<DestroyObjectController>();
+
                     cone.transform.position = new Vector3(4 * j, cone.transform.position.y, transform.position.z);
                 }
             }
@@ -64,12 +68,20 @@ public class ItemGenerator : MonoBehaviour
 
                     if (1 <= item && item <= 6)
                     {
+						// コインを作成
                         GameObject coin = Instantiate(coinPrefab) as GameObject;
+						// Destroy機能をオブジェクトに持たせる
+						coin.AddComponent<DestroyObjectController>();
+
                         coin.transform.position = new Vector3(posRange * j, coin.transform.position.y, transform.position.z + offsetZ);
                     }
                     else if (7 <= item && item <= 9)
                     {
+						// クルマを作成
                         GameObject car = Instantiate(carPrefab) as GameObject;
+						// Destroy機能をオブジェクトに持たせる
+						car.AddComponent<DestroyObjectController>();
+
                         car.transform.position = new Vector3(posRange * j, car.transform.position.y, transform.position.z + offsetZ);
                     }
                 }

@@ -73,6 +73,8 @@ public class TreeGenerator : MonoBehaviour
 	{
 		// 木を作成
 		GameObject tree = Instantiate(treePrefab) as GameObject;
+		// Destroy機能をオブジェクトに持たせる
+		tree.AddComponent<DestroyObjectController>();
 
 		// 呼び出し元が左サイド
 		if (generatePos == leftSideGeneratePos)
